@@ -31,6 +31,6 @@ jobs:
           command: echo ${COVERALLS_TOKEN}
       - run: go get github.com/mattn/goveralls
       - run: go get -v -t -d ./...
-      - run: go test -v ./... -cover -race -coverprofile=/home/ubuntu/coverage.out
+      - run: go test -v ./... -coverprofile=/home/ubuntu/coverage.out
       - run: /home/ubuntu/.go_workspace/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
       
