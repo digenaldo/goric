@@ -2,6 +2,7 @@
 
 [![Documentation](https://godoc.org/github.com/digenaldo/goric?status.svg)](http://godoc.org/github.com/digenaldo/goric)
 [![Coverage Status](https://coveralls.io/repos/github/digenaldo/goric/badge.svg?branch=master)](https://coveralls.io/github/digenaldo/goric?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/digenaldo/goric)](https://goreportcard.com/report/github.com/digenaldo/goric)
 [![CircleCI](https://circleci.com/gh/digenaldo/goric/tree/master.svg?style=svg)](https://circleci.com/gh/digenaldo/goric/tree/master)
 
 A Library in Go for validation of Brazilian documents.
