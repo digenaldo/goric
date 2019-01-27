@@ -32,5 +32,5 @@ jobs:
       - run: go get github.com/mattn/goveralls
       - run: go get -v -t -d ./...
       - run: go test -v ./... -coverprofile=coverage.out
-      - run: .go_workspace/bin/goveralls -coverprofile=coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
+      - run: /go/bin/goveralls -coverprofile=coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
       
