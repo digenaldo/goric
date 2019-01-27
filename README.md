@@ -27,15 +27,12 @@ import (
 package main
 
 import (
-	"fmt"
-
 	"github.com/digenaldo/goric"
 )
 
 func main() {
 	//returns if cpf is valid
 	b, err := goric.CpfIsValid("89576827086")
-	//return true or false
 
 	//returns if cpf size is valid
 	b1 := goric.CpfSizeIsValid("89576827086")
