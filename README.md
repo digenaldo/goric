@@ -42,6 +42,10 @@ func main() {
 }
 ```
 
+### References
+
+- [RIC](http://www.justica.gov.br/Acesso/governanca/ric)
+
 ### API Methods
 
 To see the full list of API methods check out the [documentation on godoc.org](https://godoc.org/github.com/digenaldo/goric)
