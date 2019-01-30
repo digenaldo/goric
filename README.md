@@ -42,6 +42,13 @@ func main() {
 }
 ```
 
+### To do list
+
+- [x] CPF
+- [ ] CNH
+- [ ] Título de Eleitor
+- [ ] PIS
+
 ### References
 
 - [RIC](http://www.justica.gov.br/Acesso/governanca/ric)
