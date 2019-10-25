@@ -8,39 +8,28 @@ import (
 
 //CpfIsValid validates the cpf standard for Brazilian documents
 func CpfIsValid(d string) (bool, error) {
-	c, err := RemoveEspecChar(d)
-	if err != nil {
-		return false, err
-	}
-
+	c := RemoveEspecChar(d)
 	if !CpfSizeIsValid(c) {
 		return false, nil
 	}
-
 	if InvalidCpfIsKnown(c) {
 		return false, nil
 	}
-
 	if !CpfDigitsValid(c) {
 		return false, nil
 	}
-
 	return true, nil
 }
 
 //RemoveEspecChar remove special characters
-func RemoveEspecChar(d string) (string, error) {
-	reg, err := regexp.Compile("[^a-zA-Z0-9]+")
-	if err != nil {
-		return "", err
-	}
-	return reg.ReplaceAllString(d, ""), nil
+func RemoveEspecChar(d string) string {
+	reg, _ := regexp.Compile("[^a-zA-Z0-9]+")
+	return reg.ReplaceAllString(d, "")
 }
 
 //CpfSizeIsValid verifies that the cpf size is 11
 func CpfSizeIsValid(d string) bool {
 	size := 11
-
 	if len(d) != size {
 		return false
 	}
@@ -52,14 +41,11 @@ func CpfDigitsValid(d string) bool {
 	s := strings.Split(d[9:], "")
 	c1, _ := strconv.Atoi(s[0])
 	c2, _ := strconv.Atoi(s[1])
-
 	d1 := GenerateCpfFirstDigit(d)
 	d2 := GenerateCpfSecondDigit(d)
-
 	if d1 != c1 || d2 != c2 {
 		return false
 	}
-
 	return true
 }
 
@@ -69,7 +55,6 @@ func InvalidCpfIsKnown(d string) bool {
 		"22222222222": true, "33333333333": true, "44444444444": true,
 		"55555555555": true, "66666666666": true, "77777777777": true,
 		"88888888888": true, "99999999999": true}
-
 	if knowCpfs[d] {
 		return true
 	}
@@ -79,17 +64,14 @@ func InvalidCpfIsKnown(d string) bool {
 //GenerateCpfFirstDigit generate first cpf digit
 func GenerateCpfFirstDigit(d string) int {
 	size := 11
-
 	c := strings.Split(d, "")
 	soma := 0
 	h := []int{10, 9, 8, 7, 6, 5, 4, 3, 2}
-
 	for i, v := range h {
 		s, _ := strconv.Atoi(c[i])
 		soma += v * s
 	}
 	r := soma % size
-
 	if r < 2 {
 		return 0
 	}
@@ -99,17 +81,14 @@ func GenerateCpfFirstDigit(d string) int {
 //GenerateCpfSecondDigit generate second cpf digit
 func GenerateCpfSecondDigit(d string) int {
 	size := 11
-
 	c := strings.Split(d, "")
 	soma := 0
 	h := []int{11, 10, 9, 8, 7, 6, 5, 4, 3, 2}
-
 	for i, v := range h {
 		s, _ := strconv.Atoi(c[i])
 		soma += v * s
 	}
 	r := soma % size
-
 	if r < 2 {
 		return 0
 	}

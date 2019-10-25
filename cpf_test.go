@@ -2,83 +2,135 @@ package goric
 
 import (
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func TestCpfIsValid(t *testing.T) {
-	got, _ := CpfIsValid("111.111.111-11")
-	want := false
-
-	got2, _ := CpfIsValid("11111111111")
-	want2 := false
-
-	got3, _ := CpfIsValid("432.484.831-99")
-	want3 := true
-
-	assert.Equal(t, want, got)
-	assert.Equal(t, want2, got2)
-	assert.Equal(t, want3, got3)
+	type args struct {
+		d string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    bool
+		wantErr bool
+	}{
+		{
+			name: "test remove special characters",
+			args: args{
+				d: "111.111.111-11",
+			},
+			want:    false,
+			wantErr: false,
+		},
+		{
+			name: "test verifies that the cpf size is 11",
+			args: args{
+				d: "11111111111",
+			},
+			want:    false,
+			wantErr: false,
+		},
+		{
+			name: "test verifies that the cpf is in the known invalid format",
+			args: args{
+				d: "11111111111444",
+			},
+			want:    false,
+			wantErr: false,
+		},
+		{
+			name: "test check if the cpf digits are valid",
+			args: args{
+				d: "432.484.831-90",
+			},
+			want:    false,
+			wantErr: false,
+		},
+		{
+			name: "test cpf is valid",
+			args: args{
+				d: "432.484.831-99",
+			},
+			want:    true,
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := CpfIsValid(tt.args.d)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("CpfIsValid() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("CpfIsValid() = %v, want %v", got, tt.want)
+			}
+		})
+	}
 }
-func TestRemoveEspecChar(t *testing.T) {
-	got, err := RemoveEspecChar("111.111.111-11")
-	want := "11111111111"
 
-	assert.Equal(t, want, got)
-	assert.Equal(t, nil, err)
-
-}
-func TestCpfSizeIsValid(t *testing.T) {
-	got := CpfSizeIsValid("11111111111")
-	want := true
-
-	got2 := CpfSizeIsValid("11111111")
-	want2 := false
-
-	assert.Equal(t, want, got)
-	assert.Equal(t, want2, got2)
-}
-
-func TestInvalidCpfIsKnown(t *testing.T) {
-	got := InvalidCpfIsKnown("22222222229")
-	want := false
-
-	got2 := InvalidCpfIsKnown("33333333333")
-	want2 := false
-
-	assert.Equal(t, want, got)
-	assert.NotEqual(t, want2, got2)
-}
 func TestGenerateCpfFirstDigit(t *testing.T) {
-	got := GenerateCpfFirstDigit("44504356724")
-	want := 2
-
-	got2 := GenerateCpfFirstDigit("82607236207")
-	want2 := 0
-
-	assert.Equal(t, want, got)
-	assert.Equal(t, want2, got2)
-
+	type args struct {
+		d string
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "test generate first cpf digit ok",
+			args: args{
+				d: "44504356724",
+			},
+			want: 2,
+		},
+		{
+			name: "test generate first cpf digit not ok",
+			args: args{
+				d: "82607236207",
+			},
+			want: 0,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := GenerateCpfFirstDigit(tt.args.d); got != tt.want {
+				t.Errorf("GenerateCpfFirstDigit() = %v, want %v", got, tt.want)
+			}
+		})
+	}
 }
+
 func TestGenerateCpfSecondDigit(t *testing.T) {
-	got := GenerateCpfSecondDigit("44504356724")
-	want := 4
-
-	got2 := GenerateCpfSecondDigit("56043299160")
-	want2 := 0
-
-	assert.Equal(t, want, got)
-	assert.Equal(t, want2, got2)
-
-}
-func TestCpfDigitsValid(t *testing.T) {
-	got := CpfDigitsValid("44504356724")
-	want := true
-
-	got2 := CpfDigitsValid("82607236209")
-	want2 := false
-
-	assert.Equal(t, want, got)
-	assert.Equal(t, want2, got2)
-
+	type args struct {
+		d string
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "test generate second cpf digit ok",
+			args: args{
+				d: "44504356724",
+			},
+			want: 4,
+		},
+		{
+			name: "test generate second cpf not ok",
+			args: args{
+				d: "56043299160",
+			},
+			want: 0,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := GenerateCpfSecondDigit(tt.args.d); got != tt.want {
+				t.Errorf("GenerateCpfSecondDigit() = %v, want %v", got, tt.want)
+			}
+		})
+	}
 }
